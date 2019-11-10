@@ -9,7 +9,6 @@
     <property name="tests.dir" location="src" />
     <property name="build.classes.dir" location="${build.dir}/classes" />
     <property name="test.classes.dir" location="${build.dir}/test-classes" />
-    <property name="lib" location="lib" />
     <property name="dist.dir" location="dist" />
     
     <property name="reports.dir" location="reports" />
@@ -25,7 +24,6 @@
     </target>
     
     <path id="compile.classpath">
-        <fileset dir="${lib}" includes="*.jar" />
     </path>
     
     <path id="test.compile.classpath">
@@ -147,9 +145,6 @@
              webxml="${web.dir}/WEB-INF/web.xml">        
             <fileset dir="${web.dir}" />        
             <classes dir="${build.classes.dir}"/>        
-            <lib dir="${lib}">
-                <include name="*.jar" />
-            </lib>
         </war>
     </target>
     
