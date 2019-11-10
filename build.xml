@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<project name="examples-java" default="javadoc"> 
+<project name="examples-java" default="package"> 
 	<!-- Add an ANT property for the directory containing the HTML reports: -->
 	<property file="${basedir}/local.properties"/>
     <property name="javac.debug" value="off"/>
@@ -99,27 +99,26 @@
         
     </target>
     
-    
-    <target name="javadoc" depends="compile,init" description="Generate JavaDocs.">        
-        <javadoc sourcepath="${src.dir}"
-                 destdir="${reports.javadoc}"
-                 author="true"
-                 version="true"
-                 use="true"
-                 linksource="true"             
-                 windowtitle="${ant.project.name} API">            
-            <classpath>
-                <path refid="compile.classpath" />
-                <pathelement path="${build.classes.dir}" />
-            </classpath>             
-            <doctitle><![CDATA[<h1>${ant.project.name}</h1>]]></doctitle>
-            <bottom><![CDATA[<i>Copyright &#169; 2009 Tous droits reserves.</i>]]></bottom>             
-        </javadoc>        
+    <target name="package" depends="compile" description="Generate JAR file">
+        <tstamp>
+            <format property="build.date" pattern="EEEE, d MMMM yyyy"/>
+            <format property="build.time" pattern="hh:mm a"/>
+        </tstamp>
+        <jar destfile="${dist.dir}/${project.name}-${project.version}.jar" >
+            <fileset dir="${build.classes.dir}"/>
+            <fileset dir="src/resources"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Specification-Title" value="${project.name}"/>
+                <attribute name="Specification-Version" value="${project.version}"/>
+                <attribute name="Specification-Vendor" value="Objis"/>
+                <attribute name="Implementation-Title" value="common"/>
+                <attribute name="Implementation-Version" value="${project.version}- a ${build.time} le ${build.date} "/> 
+                <attribute name="Implementation-Vendor" value="Objis"/>
+            </manifest>            
+        </jar>
     </target>
-    
-    
-    <property name="web.dir" location="web" />
-    <property name="dist.dir" location="dist" />
+  
     
     <target name="clean" description="Deletes generated directories">
         <delete dir="${build.dir}" />
