@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<project name="examples-java" default="package"> 
+<project name="examples-java" default="javadoc"> 
 	<!-- Add an ANT property for the directory containing the HTML reports: -->
 	<property file="${basedir}/local.properties"/>
     <property name="javac.debug" value="off"/>
@@ -117,56 +117,9 @@
         </javadoc>        
     </target>
     
-    <target name="package" depends="compile" description="Generate JAR file">
-        <tstamp>
-            <format property="build.date" pattern="EEEE, d MMMM yyyy"/>
-            <format property="build.time" pattern="hh:mm a"/>
-        </tstamp>
-        <jar destfile="${dist.dir}/${project.name}-${project.version}.jar" >
-            <fileset dir="${build.classes.dir}"/>
-            <fileset dir="src/resources"/>
-            <manifest>
-                <attribute name="Built-By" value="${user.name}"/>
-                <attribute name="Specification-Title" value="${project.name}"/>
-                <attribute name="Specification-Version" value="${project.version}"/>
-                <attribute name="Specification-Vendor" value="Objis"/>
-                <attribute name="Implementation-Title" value="common"/>
-                <attribute name="Implementation-Version" value="${project.version}- a ${build.time} le ${build.date} "/> 
-                <attribute name="Implementation-Vendor" value="Objis"/>
-            </manifest>            
-        </jar>
-    </target>
-    
     
     <property name="web.dir" location="web" />
     <property name="dist.dir" location="dist" />
-    
-    <target name="war" depends="compile" description="Generate WAR file">
-        <war destfile="${dist.dir}/${project.name}-${project.version}.war"
-             duplicate="fail"
-             webxml="${web.dir}/WEB-INF/web.xml">        
-            <fileset dir="${web.dir}" />        
-            <classes dir="${build.classes.dir}"/>        
-            <lib dir="${lib}">
-                <include name="*.jar" />
-            </lib>
-        </war>
-    </target>
-    
-    <property name="tomcat.install.dir" location="${user.home}/servers/tomcat/apache-tomcat-5.5.23" />
-    
-    <target name="local.deploy" depends="war" description="Deploy to local Tomcat instance">
-        <copy file="${dist.dir}/${project.name}-${project.version}.war" 
-              todir="${tomcat.install.dir}/webapps" />    
-    </target>
-    
-    <property name="web.dir" location="/var/www/public_html" />
-    
-    <target name="local.documentation" depends="javadoc" description="Deploy documentation to local web server">
-        <copy todir="${web.dir}/${project.name}/javadoc">
-            <fileset dir="${reports.javadoc"/>
-        </copy>    
-    </target>
     
     <target name="clean" description="Deletes generated directories">
         <delete dir="${build.dir}" />
