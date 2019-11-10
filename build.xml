@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<project name="examples-java" default="package"> 
+<project name="examples-java" default="test.report"> 
 	<!-- Add an ANT property for the directory containing the HTML reports: -->
 	<property file="${basedir}/local.properties"/>
     <property name="javac.debug" value="off"/>
