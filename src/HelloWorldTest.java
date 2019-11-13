@@ -52,7 +52,7 @@ public class HelloWorldTest {
 	}
 	@Test
 	public void testSum2() {
-		assertEquals(hw.sum(2, 5), 7);
+		assertEquals(hw.sum(2, 5), 6);
 	}
 	@Test
 	public void testGetMessage() {
